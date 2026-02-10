@@ -1,0 +1,163 @@
+h1 {
+  font-size: 1.5rem;
+}
+
+.section {
+  top: -1rem;
+  margin-top: -1rem;
+  padding-top: 1rem;
+  z-index: 1000;
+  background-color: white;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.header {
+  width: 100%;
+}
+
+.multi-city-leg {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: flex-end;
+  width: 100%;
+  column-gap: 1rem;
+}
+
+.searchbar-airport {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.searchbox {
+  width: 100%;
+}
+
+.input-title {
+  display: inline-flex;
+}
+
+.custom-input_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-input {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #757575;
+  border-radius: 5px;
+  padding: 5px 10px;
+  height: 34px;
+}
+
+.custom-input-date {
+  width: 100%;
+}
+
+.date-input {
+  width: 75px;
+}
+
+.date-return {
+  border-left: 1px solid #757575;
+  padding-left: 10px;
+  margin-left: 10px;
+  width: 100px;
+}
+
+.adjust-buttons {
+  display: inline-flex;
+  gap: 5px;
+  padding-left: 10px;
+  margin-left: auto;
+}
+
+.styleless-input {
+  --lwc-shadowButtonFocus: 0;
+  --lwc-borderWidthThin: 0;
+  --slds-c-input-shadow-focus: 0;
+  --sds-c-input-shadow-focus: 0;
+  width: 50px;
+  margin: 0 -10px;
+}
+
+.row {
+  width: 100%;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  gap: 0.5rem;
+}
+
+.row_multicity {
+  margin: 0.1rem 0;
+}
+
+.search-row lightning-input {
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.row lightning-button {
+  width: 120px;
+}
+
+.row-margin_left {
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.passengers {
+  margin-right: auto;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 1rem;
+  margin-right: auto;
+  align-items: flex-end;
+}
+
+.filters lightning-input {
+  width: 150px;
+}
+
+.title {
+  padding: 1rem 0;
+}
+
+.flights-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 125px;
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.error p {
+  color: red;
+}

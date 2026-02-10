@@ -1,0 +1,18 @@
+<template>
+  <div class="container">
+    <template for:each={flightOptions} for:item="flight">
+      <div key={flight.id} class="flight-item">
+        <c-flight-api-option
+          flight={flight}
+          selected-flight={selectedFlightId}
+          carriers={carriers}
+          first-item={flight.firstItem}
+          last-item={flight.lastItem}
+          type={flightType}
+          passenger-count={passengerCount}
+          travel-class={travelClass}
+        ></c-flight-api-option>
+      </div>
+    </template>
+  </div>
+</template>

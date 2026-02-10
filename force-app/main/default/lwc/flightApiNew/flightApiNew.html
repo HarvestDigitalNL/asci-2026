@@ -1,0 +1,60 @@
+<template>
+  <lightning-modal-header label={modalHeader}></lightning-modal-header>
+  <lightning-modal-body class="modal-body">
+
+
+    <template if:true={screenState.dataScreen}>
+      <c-flight-api-data
+        itinerary-id={recordId}
+        onreset={handleResetFlights}
+        selected-flight-id={selectedFlightId}
+        flight-type={flightType}
+        onsetflightsresult={handleSetFlightsResult}
+        flights-result={flightsResult}
+        onpassengerdata={handlePassengerData}
+        stored-passenger-data={passengerData}
+      ></c-flight-api-data
+    ></template>
+
+    <template if:true={screenState.confirmationScreen}
+      ><c-flight-api-confirmation
+        selected-flight-summary={selectedFlightSummary}
+        passenger-data={passengerData}
+        is-loading={isLoading}
+      ></c-flight-api-confirmation
+    ></template>
+  </lightning-modal-body>
+  <lightning-modal-footer>
+    <div class="buttons">
+      <lightning-button
+        if:true={screenState.dataScreen}
+        label="Cancel"
+        onclick={closeModal}
+        disabled={isLoading}
+      ></lightning-button>
+      <lightning-button
+        if:false={screenState.confirmationScreen}
+        label="Next"
+        variant="brand"
+        onclick={handleNext}
+        disabled={disableNext}
+      ></lightning-button>
+      <lightning-button
+        if:true={screenState.confirmationScreen}
+        label="Confirm and New"
+        variant="brand"
+        data-type="new"
+        onclick={handleConfirm}
+        disabled={isLoading}
+      ></lightning-button>
+      <lightning-button
+        if:true={screenState.confirmationScreen}
+        label="Confirm"
+        variant="brand"
+        data-type="close"
+        onclick={handleConfirm}
+        disabled={isLoading}
+      ></lightning-button>
+    </div>
+  </lightning-modal-footer>
+</template>

@@ -1,0 +1,45 @@
+<template>
+  <div class={selectedClass} onclick={selectFlight}>
+    <div class={optionClass}>
+      <div class="option-info fixed-width_small"><p>{flightOption.validatedCarrier}</p></div>
+
+      <div class="option-info fixed-width_large">
+        <template for:each={flightOption.flights} for:item="flight">
+          <div key={flight.flightId} class="flight-info">
+            <p>{flight.flightTimes}</p>
+            <span>{flight.operators}</span>
+          </div>
+        </template>
+      </div>
+
+      <div class="option-info fixed-width_small">
+        <template for:each={flightOption.flights} for:item="flight">
+          <div key={flight.flightId} class="flight-info">
+            <p>{flight.duration}</p>
+            <span>{flight.citiesIATA}</span>
+          </div>
+        </template>
+      </div>
+
+      <div class="option-info fixed-width_medium">
+        <template for:each={flightOption.flights} for:item="flight">
+          <div key={flight.flightId} class="flight-info">
+            <p>{flight.stopAmount}</p>
+            <ul class="stops">
+              <template for:each={flight.stops} for:item="stop">
+                <li key={stop}>{stop}</li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
+
+      <div class="option-info common-info">
+        <div class="flight-info">
+          <p>{flightOption.totalPriceFormatted}</p>
+          <span>{flightOption.type}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

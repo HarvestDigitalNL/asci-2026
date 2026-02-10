@@ -1,0 +1,16 @@
+<template>
+  <div class="container">
+    <span if:true={showPassengerLimitWarning}
+      >Er geldt een maximum van 9 personen bij het boeken van vluchten</span
+    >
+
+    <lightning-radio-group
+      name="radioGroup"
+      options={options}
+      value={flightType}
+      onchange={handleTypeChange}
+      disabled={disabled}
+    >
+    </lightning-radio-group>
+  </div>
+</template>

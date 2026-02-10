@@ -1,0 +1,80 @@
+<template>
+  <div class="container">
+    <div if:true={isLoading} class="loading">
+      <lightning-spinner alternative-text="Laden" variant="brand" size="medium"></lightning-spinner>
+    </div>
+    <div class="flight-summary">
+      <div class="header"><h1>Bevestiging van Vluchtreservering</h1></div>
+
+      <div class="flight-details">
+        <div class="summary-section">
+          <h2>Samenvatting</h2>
+          <p>
+            <strong>Geverifieerde luchtvaartmaatschappij: </strong>
+            {selectedFlightSummary.validatedCarrier}
+          </p>
+          <p><strong>Vertrekdatum:</strong> {departureDate}</p>
+          <p if:true={returnDate}><strong>Retourdatum:</strong> {returnDate}</p>
+          <p><strong>Volwassen passagiers:</strong> {passengerData.adults}</p>
+          <p if:true={passengerData.children}><strong>Kind passagiers:</strong> {passengerData.children}</p>
+          <p if:true={passengerData.infants}><strong>Baby passagiers:</strong> {passengerData.infants}</p>
+          <p><strong>Vertrekluchthaven:</strong> {departureAirport}</p>
+          <p if:true={flightType.roundtrip}><strong>Aankomstluchthaven:</strong> {destinationAirport}</p>
+        </div>
+
+        <div class="pricing-section">
+          <h2>Prijzen</h2>
+          <p>
+            <strong>Inkoopprijs totaal: </strong>
+            <span class="price"> {selectedFlightSummary.totalPriceFormatted}</span>
+          </p>
+          <p><strong>Reistype:</strong> {selectedFlightSummary.type}</p>
+          <p>
+            <strong>Ruimbagage:</strong>
+            <span if:true={checkedBagsIncluded}> inclusief</span>
+            <span if:false={checkedBagsIncluded}> niet inclusief</span>
+          </p>
+        </div>
+
+        <template for:each={flights} for:item="flight" for:index="index">
+          <div key={flight.flightId} class="flight-section">
+            <h2 if:true={flightType.multicity}>Vlucht {flight.formattedDepartureDate}</h2>
+            <h2 if:false={flightType.multicity}>
+              <span if:true={flight.firstItem}>Vertrek</span>
+              <span if:false={flight.firstItem}>Retour</span> Vlucht
+            </h2>
+            <p>
+              <strong>Tijd: </strong>
+              {flight.flightTimes}
+            </p>
+            <p>
+              <strong>Operators: </strong>
+              {flight.operators}
+            </p>
+            <p if:true={flight.flightNumber}>
+              <strong>Vluchtnummer: </strong>
+              {flight.flightNumber}
+            </p>
+            <p>
+              <strong>Duur: </strong>
+              {flight.duration}
+            </p>
+            <p>
+              <strong>Route: </strong>
+              {flight.citiesIATA}
+            </p>
+            <p>
+              <strong>Stops: </strong>
+              {flight.stopAmount}
+            </p>
+            <ul>
+              <template for:each={flight.stops} for:item="stop">
+                <li key={stop}>{stop}</li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>

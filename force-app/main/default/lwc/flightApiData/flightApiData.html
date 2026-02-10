@@ -1,0 +1,161 @@
+<template>
+  <div class="container">
+    <div class="section sticky">
+
+      <div class="header">
+        <div class="multi-city-leg">
+          <div class="searchbar-airport">
+            <!-- ============================================================ -->
+            <!-- EXERCISE 4 - Part B: Airport selection dropdowns            -->
+            <!--                                                               -->
+            <!-- Add TWO lightning-combobox components here:                    -->
+            <!--   1. Departure airport (label="Vertrek luchthaven")           -->
+            <!--   2. Arrival airport   (label="Aankomst luchthaven")          -->
+            <!--                                                               -->
+            <!-- Each combobox needs:                                          -->
+            <!--   - options={airportOptions}  (the getter you made in Part A) -->
+            <!--   - value={departureAirport} or value={arrivalAirport}        -->
+            <!--   - onchange={handleAirportChange}                            -->
+            <!--   - data-type="departure" or data-type="arrival"              -->
+            <!--                                                               -->
+            <!-- Docs: https://developer.salesforce.com/docs/platform/lightning-component-reference/guide/lightning-combobox.html?type=Example -->
+            <!-- ============================================================ -->
+            <!-- TODO: Add your lightning-combobox components here -->
+
+          </div>
+
+          <div class="custom-input_container">
+            <lightning-input
+              type="date"
+              label="Vertrekdatum"
+              value={departureDate}
+              data-type="date"
+              onchange={handleChange}
+            ></lightning-input>
+            <lightning-input
+              type="date"
+              label="Retourdatum"
+              value={returnDate}
+              data-type="returnDate"
+              onchange={handleChange}
+            ></lightning-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="filters">
+          <lightning-select
+            label="Selecteer een klasse"
+            value={travelClass}
+            options={flightClasses}
+            data-type="class"
+            onchange={handleChange}
+            disabled={isSearching}
+          >
+          </lightning-select>
+          <c-multi-select-dropdown
+            options={preferredAirlines}
+            data-type="airlines"
+            onchange={handleChange}
+            selected-items={includedAirlineCodes}
+            disabled={isSearching}
+          ></c-multi-select-dropdown>
+          <lightning-select
+            label="Max. stops"
+            options={maxNumberOfConnections}
+            value={maxStops}
+            data-type="connections"
+            onchange={handleChange}
+            disabled={isSearching}
+          >
+          </lightning-select>
+          <lightning-select
+            label="Sorteer op"
+            value={sorting}
+            options={sortOptions}
+            data-type="sort"
+            onchange={handleChange}
+            disabled={isSearching}
+          >
+          </lightning-select>
+        </div>
+
+        <div class="custom-input_container">
+          <div class="input-title">Max. resultaten</div>
+          <div class="custom-input">
+            <div>
+              <lightning-input
+                class="styleless-input"
+                type="number"
+                variant="label-hidden"
+                value={resultLimit}
+                data-type="limit"
+                onchange={handleChange}
+                disabled={isSearching}
+              ></lightning-input>
+            </div>
+            <div class="adjust-buttons">
+              <lightning-icon
+                icon-name="utility:chevronleft"
+                size="xx-small"
+                alternative-text="decrease"
+                data-type="decrease"
+                onclick={adjustSearchLimit}
+              ></lightning-icon>
+              <lightning-icon
+                icon-name="utility:chevronright"
+                size="xx-small"
+                alternative-text="increase"
+                data-type="increase"
+                onclick={adjustSearchLimit}
+              ></lightning-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="rowbutton">
+          <lightning-button
+            label="Zoek vluchten"
+            onclick={searchFlights}
+            variant="brand"
+            disabled={disableSearch}
+          ></lightning-button>
+        </div>
+      </div>
+
+      <div class="title"><h1>Zoekresultaten:</h1></div>
+    </div>
+
+    <div class="flights-section">
+      <!-- ============================================================ -->
+      <!-- EXERCISE 6: Conditional rendering for search results          -->
+      <!--                                                               -->
+      <!-- Implement 4 UI states using if:true / if:false directives:    -->
+      <!--                                                               -->
+      <!-- 1. LOADING: When {isSearching} is true                        -->
+      <!--    → Show: <lightning-spinner alternative-text="Loading"       -->
+      <!--             variant="brand" size="medium">                    -->
+      <!--                                                               -->
+      <!-- 2. ERROR: When not searching AND {hasError} is true           -->
+      <!--    → Show: <p>{error}</p> inside a div with class="error"     -->
+      <!--                                                               -->
+      <!-- 3. EMPTY: When not searching, no error, {flightsResult}       -->
+      <!--           is falsy                                            -->
+      <!--    → Show: <p>Vul alle velden in om vluchten te zoeken</p>    -->
+      <!--                                                               -->
+      <!-- 4. RESULTS: When {flightsResult} is truthy                    -->
+      <!--    → Show: <c-flight-api-option-selector                      -->
+      <!--              flights-result={flightsResult}                   -->
+      <!--              selected-flight-id={selectedFlightId}            -->
+      <!--              flight-type={flightType}                         -->
+      <!--              travel-class={travelClass}>                      -->
+      <!--                                                               -->
+      <!-- Hint: You can nest if:true/if:false on <template> or <div>    -->
+      <!-- Docs: https://developer.salesforce.com/docs/platform/lwc/guide/create-conditional.html -->
+      <!-- ============================================================ -->
+      <!-- TODO: Add your conditional rendering here -->
+
+    </div>
+  </div>
+</template>

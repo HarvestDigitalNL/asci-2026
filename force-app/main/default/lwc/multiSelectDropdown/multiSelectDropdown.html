@@ -1,0 +1,20 @@
+<template>
+  <div class="container">
+    <lightning-button
+      class="button"
+      label="Vliegmaatschappij"
+      onclick={toggleDropdown}
+      disabled={disabled}
+      stretch
+    ></lightning-button>
+    <div if:true={isDropdownOpen} class="dropdown">
+      <lightning-checkbox-group
+        name="Checkbox Group"
+        options={options}
+        value={selected}
+        onchange={handleChange}
+        variant="label-hidden"
+      ></lightning-checkbox-group>
+    </div>
+  </div>
+</template>
