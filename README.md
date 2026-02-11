@@ -40,35 +40,27 @@ To develop with Salesforce DX, you need to set up Visual Studio Code (VS Code) w
 
 Now deploy your local code and configuration into your Developer Edition org.
 
-1. Press `Ctrl+Shift+P` / `Cmd+Shift+P`.
-2. Type and select **"SFDX: Deploy This Source to Org"** (make sure you have the `force-app` folder or a file inside it selected).
+1. In VS Code's Explorer (left sidebar), **right-click** on the `force-app` folder.
+2. Select **"SFDX: Deploy Source to Org"** from the context menu.
 3. Check the **Output** panel at the bottom of VS Code to ensure the status says `Successfully ran`.
+4. Press `Ctrl+Shift+P` / `Cmd+Shift+P`, type **"SFDX: Open Default Org"** and press Enter to open your org.
 
----
-
-## Activate the Opportunity Record Page
-
-The deploy includes a custom Opportunity record page with the Flight Search component, but it needs to be activated:
-
-1. Press `Ctrl+Shift+P` / `Cmd+Shift+P`, type **"SFDX: Open Default Org"** and press Enter.
-2. Navigate to any Opportunity record (or create one first via the Opportunities tab).
-3. Click the **gear icon ⚙️** in the top-right corner and select **Edit Page**.
-4. In the Lightning App Builder, click **Activation** (top-right).
-5. Go to the **Org Default** tab and click **Assign as Org Default**.
-6. Click **Save**, then click **← Back** (top-left) to return to the record.
-
-You should now see the Flight Search component on every Opportunity record page.
+Alternatively, you can use the terminal commands:
+```
+sf project deploy start
+sf org open
+```
 
 ---
 
 ## Create Mock Data
 
-To create mock data you can run an Apex script in your org:
+To create mock data (airports, airlines, and a test opportunity) you can run an Apex script in your org:
 1. Open the file `scripts/apex/seed.apex` in VS Code.
 2. Press `Ctrl+Shift+P` / `Cmd+Shift+P`.
 3. Type and select **"SFDX: Execute Anonymous Apex with Editor Contents"**
 4. Check the **Output** panel at the bottom of VS Code to ensure the status says `Successfully ran`.
-5. Open your org and navigate to the Opportunities tab to see the new records.
+5. Open your org and navigate to the Opportunities tab. Search for **"Test Flight Booking"** to find the test opportunity.
 
 ---
 
