@@ -1,0 +1,1 @@
+FlightSearchDataSeeder.seedData();

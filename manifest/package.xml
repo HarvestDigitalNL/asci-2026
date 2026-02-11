@@ -51,5 +51,19 @@
     <types>
         <name>WebLink</name>
     </types>
+    <types>
+        <members>Airline__c-Airline Layout</members>
+        <members>Airport__c-Airport Layout</members>
+        <members>Opportunity-Opportunity Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Opportunity_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Opportunity.SearchFlights</members>
+        <name>QuickAction</name>
+    </types>
     <version>65.0</version>
 </Package>
