@@ -154,7 +154,11 @@ export default class FlightApiData extends LightningElement {
   }
 
   set includedAirlineCodes(value) {
-    this._includedAirlineCodes = value ? value.join(",") : "";
+    if (Array.isArray(value)) {
+      this._includedAirlineCodes = value.join(",");
+    } else {
+      this._includedAirlineCodes = value || "";
+    }
   }
 
   _maxStops;
