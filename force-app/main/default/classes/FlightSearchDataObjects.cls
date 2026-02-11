@@ -13,6 +13,7 @@ public with sharing class FlightSearchDataObjects {
     @AuraEnabled public Integer duration { get; set; } // in minutes
     @AuraEnabled public Integer availableSeats { get; set; }
     @AuraEnabled public Boolean isDirect { get; set; }
+    @AuraEnabled public Integer stops { get; set; } // number of stops (0 = direct)
   }
 
   public class SearchCriteria {

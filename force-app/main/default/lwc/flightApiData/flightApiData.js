@@ -474,7 +474,7 @@ export default class FlightApiData extends LightningElement {
 
     // Build airline codes list from selected items
     const airlineCodes = this.includedAirlineCodes
-      ? this.includedAirlineCodes.split(",").filter((c) => c)
+      ? this.includedAirlineCodes.split(",").map((c) => c.trim()).filter((c) => c)
       : [];
 
     searchFlights({
@@ -495,9 +495,7 @@ export default class FlightApiData extends LightningElement {
         // Apply max stops filter
         if (this.maxStops !== "10") {
           const maxStopsInt = parseInt(this.maxStops, 10);
-          if (maxStopsInt === 0) {
-            limitedFlights = limitedFlights.filter((f) => f.isDirect);
-          }
+          limitedFlights = limitedFlights.filter((f) => (f.stops || 0) <= maxStopsInt);
         }
 
         // Sort

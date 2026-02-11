@@ -71,10 +71,10 @@ public with sharing class FlightSearchApi {
         continue;
       }
 
-      // Generate 2-3 flights per airline
-      Integer numFlights = Math.mod(Math.abs(airlineCode.hashCode()), 2) + 2;
+      // Generate 3 flights per airline (one for each stop variant: 0, 1, 2)
+      Integer numFlights = 3;
 
-      for (Integer i = 0; i < numFlights && flightCount < 15; i++) {
+      for (Integer i = 0; i < numFlights && flightCount < 20; i++) {
         FlightSearchDataObjects.Flight flight = generateFlight(
                 airlineCode,
                 criteria.departureAirport,
@@ -114,21 +114,35 @@ public with sharing class FlightSearchApi {
     flight.flightNumber = airlineCode + String.valueOf(flightNum);
 
     // Set departure time (spread throughout the day)
-    Integer hourOffset = variant * 4 + Math.mod(Math.abs(airlineCode.hashCode()), 8);
+    Integer hourOffset = variant * 3 + Math.mod(Math.abs(airlineCode.hashCode()), 6);
     DateTime departureDateTime = DateTime.newInstance(
             departureDate.year(),
             departureDate.month(),
             departureDate.day(),
-            hourOffset,
-            Math.mod(variant * 15, 60),
+            6 + hourOffset, // Start from 6 AM
+            Math.mod(variant * 17 + Math.abs(airlineCode.hashCode()), 60),
             0
     );
     flight.departureTime = departureDateTime;
 
-    // Calculate duration based on route
+    // Determine stops (0, 1, or 2) - use simple pattern based on variant
+    // This ensures we get a good mix of 0, 1, and 2 stops
+    if (variant == 0) {
+      flight.stops = 0; // First flight per airline is always direct
+    } else if (variant == 1) {
+      flight.stops = 1; // Second flight has 1 stop
+    } else {
+      flight.stops = 2; // Third flight has 2 stops
+    }
+    flight.isDirect = (flight.stops == 0);
+
+    // Calculate duration based on route - MORE VARIED
     Integer baseDuration = calculateBaseDuration(departureAirport, arrivalAirport);
-    Integer durationVariance = Math.mod(variant * 30, 60);
-    flight.duration = baseDuration + durationVariance;
+    // Add significant variance: variant * 45 mins, plus airline-specific variance
+    Integer durationVariance = (variant * 45) + Math.mod(Math.abs(airlineCode.hashCode()), 90);
+    // Add extra time for stops (30-60 mins per stop for layover)
+    Integer stopTime = flight.stops * (30 + Math.mod(Math.abs(airlineCode.hashCode()), 30));
+    flight.duration = baseDuration + durationVariance + stopTime;
 
     // Set arrival time
     flight.arrivalTime = departureDateTime.addMinutes(flight.duration);
@@ -142,15 +156,19 @@ public with sharing class FlightSearchApi {
       arrivalAirport,
       flight.flightClass,
       airlineCode,
-      variant
+      variant,
+      flight.stops
     );
-    flight.currencyCode = 'USD';
+    flight.currencyCode = 'EUR';
 
-    // Set available seats
-    flight.availableSeats = 50 + Math.mod(variant * 20, 150);
-
-    // Determine if direct flight
-    flight.isDirect = Math.mod(variant, 3) != 0; // 2 out of 3 flights are direct
+    // Set available seats - varies more by class
+    Integer baseSeats = 50;
+    if (flight.flightClass == 'Business') {
+      baseSeats = 20;
+    } else if (flight.flightClass == 'First') {
+      baseSeats = 8;
+    }
+    flight.availableSeats = baseSeats + Math.mod(variant * 7, 20);
 
     return flight;
   }
@@ -183,32 +201,43 @@ public with sharing class FlightSearchApi {
           String arrival,
           String flightClass,
           String airlineCode,
-          Integer variant
+          Integer variant,
+          Integer stops
   ) {
     // Base price calculation
     Integer routeHash = Math.abs((departure + arrival).hashCode());
-    Decimal basePrice = 200 + Math.mod(routeHash, 800);
+    Decimal basePrice = 150 + Math.mod(routeHash, 400);
 
-    // Class multiplier
+    // Class multiplier - VERY VISIBLE DIFFERENCE
     Decimal classMultiplier = 1.0;
     if (flightClass == 'Business') {
-      classMultiplier = 2.5;
+      classMultiplier = 3.0; // Business is 3x economy
     } else if (flightClass == 'First') {
-      classMultiplier = 4.0;
+      classMultiplier = 5.0; // First is 5x economy
+    }
+
+    // Stops discount (flights with stops are cheaper)
+    Decimal stopsMultiplier = 1.0;
+    if (stops == 1) {
+      stopsMultiplier = 0.75; // 25% cheaper with 1 stop
+    } else if (stops >= 2) {
+      stopsMultiplier = 0.60; // 40% cheaper with 2+ stops
     }
 
     // Airline multiplier (premium airlines cost more)
     Decimal airlineMultiplier = 1.0;
     if (airlineCode == 'EK' || airlineCode == 'QR' || airlineCode == 'SQ') {
-      airlineMultiplier = 1.2;
-    } else if (airlineCode == 'BA' || airlineCode == 'LH') {
-      airlineMultiplier = 1.1;
+      airlineMultiplier = 1.3; // Premium Asian/Middle East carriers
+    } else if (airlineCode == 'BA' || airlineCode == 'LH' || airlineCode == 'AF') {
+      airlineMultiplier = 1.15; // European flag carriers
+    } else if (airlineCode == 'KL') {
+      airlineMultiplier = 1.1; // KLM
     }
 
     // Variant multiplier (different time slots have different prices)
-    Decimal variantMultiplier = 1.0 + (variant * 0.15);
+    Decimal variantMultiplier = 1.0 + (variant * 0.1);
 
-    Decimal finalPrice = basePrice * classMultiplier * airlineMultiplier * variantMultiplier;
+    Decimal finalPrice = basePrice * classMultiplier * stopsMultiplier * airlineMultiplier * variantMultiplier;
 
     // Round to 2 decimal places
     return finalPrice.setScale(2);
