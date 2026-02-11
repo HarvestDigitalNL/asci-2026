@@ -79,9 +79,15 @@ h1 {
 .styleless-input {
   --lwc-shadowButtonFocus: 0;
   --lwc-borderWidthThin: 0;
-  --slds-c-input-shadow-focus: 0;
+  --lwc-colorBorder: transparent;
   --sds-c-input-shadow-focus: 0;
-  width: 50px;
+  --sds-c-input-color-border: transparent;
+  --sds-c-input-sizing-border: 0;
+  --slds-c-input-shadow-focus: 0;
+  --slds-c-input-color-border: transparent;
+  --slds-c-input-sizing-border: 0;
+  width: 35px;
+  height: 30px;
   margin: 0 -10px;
 }
 
