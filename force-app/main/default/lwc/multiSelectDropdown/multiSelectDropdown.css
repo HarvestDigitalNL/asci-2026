@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  width: 200px;
+  width: 150px;
 }
 
 .dropdown {
@@ -15,5 +15,5 @@
   height: 175px;
   overflow: hidden;
   overflow-y: auto;
-  width: 200px;
+  width: 150px;
 }

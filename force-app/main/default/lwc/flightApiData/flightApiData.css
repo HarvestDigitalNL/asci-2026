@@ -87,7 +87,7 @@ h1 {
   --slds-c-input-color-border: transparent;
   --slds-c-input-sizing-border: 0;
   width: 35px;
-  height: 30px;
+  height: 32px;
   margin: 0 -10px;
 }
 
@@ -166,4 +166,9 @@ h1 {
 
 .error p {
   color: red;
+}
+
+.rowbutton {
+  flex-shrink: 0;
+  white-space: nowrap;
 }

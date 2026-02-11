@@ -21,6 +21,17 @@ All exercises are independent — if you get stuck on one, move on to the next.
 
 > Tip: Start by reading `FlightSearchDataObjects.cls` to understand the data structures used throughout the project.
 
+### Testing your work
+
+To see your changes in action after deploying:
+
+1. Open your Salesforce org (via **SFDX: Open Default Org**).
+2. Navigate to the **Opportunities** tab.
+3. Click **New** and create an Opportunity with the minimum required fields (Name, Close Date, Stage).
+4. Open the Opportunity record and click the **Search Flights** button at the top to open the flight search modal.
+
+Each time you make changes to the code, re-deploy and refresh the page in Salesforce to see the result. You can deploy a single file or component by **right-clicking** it in the VS Code file explorer and selecting **"SFDX: Deploy Source to Org"**.
+
 ---
 
 ## Overview

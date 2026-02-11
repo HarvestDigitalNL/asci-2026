@@ -5,7 +5,7 @@ import searchFlights from "@salesforce/apex/FlightSearchController.searchFlights
 
 const flightClasses = [
   {
-    label: "--- Selecteer een klasse ---",
+    label: "--- Selecteer klasse ---",
     value: "",
     disabled: true,
   },
