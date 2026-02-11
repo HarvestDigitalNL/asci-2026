@@ -27,7 +27,7 @@ public with sharing class FlightSearchController {
     * @param airlineCodes List of string of airline IATA codes
     * @return List of matching flights
     */
-  @AuraEnabled(cacheable=true)
+  @AuraEnabled
   public static List<FlightSearchDataObjects.Flight> searchFlights(
     String departureAirport,
     String arrivalAirport,

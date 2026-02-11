@@ -23,7 +23,7 @@ export default class MultiSelectDropdown extends LightningElement {
 
   connectedCallback() {
     if (this.selectedItems) {
-      this._selected = this.selectedItems.split(',');
+      this._selected = this.selectedItems.split(',').map(s => s.trim());
     }
 
     window.addEventListener('searchflights', () => {
@@ -36,6 +36,7 @@ export default class MultiSelectDropdown extends LightningElement {
   }
 
   handleChange(e) {
+    e.stopPropagation(); // Prevent lightning-checkbox-group's event from bubbling up
     this.selected = e.detail.value;
     this.dispatchEvent(new CustomEvent('change', { detail: this.selectedValues }));
   }
