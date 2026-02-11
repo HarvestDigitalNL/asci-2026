@@ -309,12 +309,13 @@ export default class FlightApiData extends LightningElement {
   //   "returnDate"  → this.returnDate    = new Date(event.target.value)
   //   "limit"       → this.resultLimit   = event.detail.value
   //   "class"       → this.travelClass   = event.detail.value
-  //   "airlines"    → this.includedAirlineCodes = event.detail.value
+  //   "airlines"    → this.includedAirlineCodes = event.detail
   //   "connections" → this.maxStops      = event.detail.value
   //   "sort"        → this.sorting       = event.detail.value
   //
   // Note: date inputs use event.target.value (raw DOM).
   //       Salesforce components use event.detail.value.
+  //       The airlines multi-select uses event.detail (no .value).
   // ============================================================
   handleChange(event) {
     // TODO: Implement this method

@@ -95,7 +95,7 @@ The `handleChange` method is called by multiple UI elements (date pickers, dropd
 | `"returnDate"` | `event.target.value` | `this.returnDate` (wrap in `new Date(...)`) |
 | `"limit"` | `event.detail.value` | `this.resultLimit` |
 | `"class"` | `event.detail.value` | `this.travelClass` |
-| `"airlines"` | `event.detail.value` | `this.includedAirlineCodes` |
+| `"airlines"` | `event.detail` | `this.includedAirlineCodes` |
 | `"connections"` | `event.detail.value` | `this.maxStops` |
 | `"sort"` | `event.detail.value` | `this.sorting` |
 
